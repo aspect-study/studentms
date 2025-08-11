@@ -4,7 +4,7 @@ package com.studentms;
  * Main class of the Student Management Application Demo
  * @author Aspect;
  */
-public class Main {
+public class StudentManagementDemo {
     public static void main(String[] args) {
         System.out.println("Starting Student Management System...");
         try {
