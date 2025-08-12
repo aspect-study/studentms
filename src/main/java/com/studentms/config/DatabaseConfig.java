@@ -27,7 +27,7 @@ public class DatabaseConfig {
 
     public Connection getConnection() throws DatabaseException {
         try {
-            Class.forName("com.mysql.cj.jdbc.Drivers");
+            Class.forName("com.mysql.cj.jdbc.Driver");
             return DriverManager.getConnection(DATABASE_URL, DB_USERNAME, DB_PASSWORD);
         }catch (SQLException | ClassNotFoundException e) {
             throw new DatabaseException("Failed to establish database connection", e);
