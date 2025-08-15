@@ -11,7 +11,7 @@ public class StudentDAOImpl implements StudentDAO {
 
     private final DatabaseConfig databaseConfig;
 
-    public StudentDAOImpl(DatabaseConfig databaseConfig) {
+    public StudentDAOImpl() {
         this.databaseConfig = DatabaseConfig.getInstance();
     }
 
