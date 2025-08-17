@@ -3,8 +3,10 @@ package com.studentms.service.impl;
 import com.studentms.dao.StudentDAO;
 import com.studentms.dao.impl.StudentDAOImpl;
 import com.studentms.exceptions.DatabaseException;
+import com.studentms.exceptions.ValidationException;
 import com.studentms.model.Student;
 import com.studentms.service.StudentService;
+import com.studentms.validator.StudentValidator;
 
 public class StudentServiceImpl implements StudentService {
 
@@ -15,7 +17,8 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public void createStudent(Student student) throws DatabaseException {
+    public void createStudent(Student student) throws DatabaseException, ValidationException {
+        StudentValidator.validateStudent(student);
         studentDAO.save(student);
     }
 }

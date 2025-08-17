@@ -1,6 +1,7 @@
 package com.studentms.controller;
 
 import com.studentms.exceptions.DatabaseException;
+import com.studentms.exceptions.ValidationException;
 import com.studentms.model.Student;
 import com.studentms.service.StudentService;
 import com.studentms.service.impl.StudentServiceImpl;
@@ -18,8 +19,10 @@ public class StudentController {
             Student student = new Student(name,email,course,age);
             studentService.createStudent(student);
             return "Student created successfully with ID: " + student.getId();
-        }catch(DatabaseException e) {
-            return "Database Error:" + e.getMessage();
+        } catch(DatabaseException e) {
+            return "Database Error: " + e.getMessage();
+        } catch (ValidationException e) {
+            return "Validation Error: " + e.getMessage();
         }
     }
 }
