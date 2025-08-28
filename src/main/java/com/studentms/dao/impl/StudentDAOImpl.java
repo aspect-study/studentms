@@ -6,6 +6,8 @@ import com.studentms.exceptions.DatabaseException;
 import com.studentms.model.Student;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDAOImpl implements StudentDAO {
 
@@ -24,7 +26,7 @@ public class StudentDAOImpl implements StudentDAO {
                      connection.prepareStatement
                              (sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, student.getName().trim());
-            preparedStatement.setString(2,student.getEmail().trim());
+            preparedStatement.setString(2, student.getEmail().trim());
             preparedStatement.setString(3, student.getCourse().trim());
             preparedStatement.setInt(4, student.getAge());
 
@@ -41,5 +43,28 @@ public class StudentDAOImpl implements StudentDAO {
         } catch (SQLException e) {
             throw new DatabaseException("Failed to save student", e);
         }
+    }
+
+    @Override
+    public List<Student> findAll() throws DatabaseException {
+        String sql = "SELECT * FROM students ORDER BY id";
+        var students = new ArrayList<Student>();
+        try (Connection connection = databaseConfig.getConnection();
+             Statement statement = connection.createStatement();
+             ResultSet resultSet = statement.executeQuery(sql)) {
+
+            while (resultSet.next()) {
+                students.add(new Student(
+                        resultSet.getInt("id"),
+                        resultSet.getString("name"),
+                        resultSet.getString("email"),
+                        resultSet.getString("course"),
+                        resultSet.getInt("age")
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed to retrieve all students", e);
+        }
+        return students;
     }
 }

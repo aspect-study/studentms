@@ -6,6 +6,8 @@ import com.studentms.model.Student;
 import com.studentms.service.StudentService;
 import com.studentms.service.impl.StudentServiceImpl;
 
+import java.util.List;
+
 public class StudentController {
 
     private final StudentService studentService;
@@ -24,5 +26,21 @@ public class StudentController {
         } catch (ValidationException e) {
             return "Validation Error: " + e.getMessage();
         }
+    }
+
+    public String getAllStudent() {
+        var stringBuilder = new StringBuilder();
+        try {
+            List<Student> students = studentService.getAllStudents();
+            if (students.isEmpty()) {
+                return "No students found.";
+            }
+            for(Student student: students) {
+                stringBuilder.append(student.toString()).append("\n");
+            }
+        } catch (DatabaseException e) {
+            return "Database Error: " + e.getMessage();
+        }
+        return stringBuilder.toString();
     }
 }

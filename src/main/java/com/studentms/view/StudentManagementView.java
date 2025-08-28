@@ -27,18 +27,28 @@ public class StudentManagementView {
                         handleCreateStudent();
                         break;
                     case 2:
-                        //TODO handle logic for getting and showing all students
+                        handleViewAllStudents();
                         break;
                     case 3:
+                        //TODO hadle logic for searching student bu ID
+                        break;
+                    case 4:
                         System.out.println("Good bye! Thank you.");
                         System.out.println("=".repeat(40));
                         return;
                 }
 
             } catch (InputMismatchException e) {
-                System.out.println("Invalid choice! Please select 1-2.");
+                System.out.println("Invalid choice! Please select 1-3.");
+                scanner.nextLine();
             }
         }
+    }
+
+    private void handleViewAllStudents() {
+        System.out.println("\n" + "=".repeat(40));
+        String students = studentController.getAllStudent();
+        System.out.println(students);
     }
 
     private void printMenu() {
@@ -47,7 +57,9 @@ public class StudentManagementView {
         System.out.println("=".repeat(40));
         System.out.println("1. Add New Student");
         System.out.println("2. View All Students");
-        System.out.println("3. Exit");
+        System.out.println("3. View Student by ID");
+        System.out.println("4. Exit");
+        System.out.print("Enter you choice: ");
     }
 
     private void handleCreateStudent() {

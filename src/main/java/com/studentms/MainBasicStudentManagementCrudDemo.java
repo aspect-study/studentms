@@ -7,7 +7,6 @@ import com.studentms.view.StudentManagementView;
  */
 public class MainBasicStudentManagementCrudDemo {
     public static void main(String[] args) {
-        StudentManagementView studentManagementView = new StudentManagementView();
-        studentManagementView.displayMenu();
+        new StudentManagementView().displayMenu();
     }
 }
