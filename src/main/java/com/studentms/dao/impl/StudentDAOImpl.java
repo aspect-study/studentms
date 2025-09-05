@@ -3,6 +3,7 @@ package com.studentms.dao.impl;
 import com.studentms.config.DatabaseConfig;
 import com.studentms.dao.StudentDAO;
 import com.studentms.exceptions.DatabaseException;
+import com.studentms.exceptions.StudentNotFoundException;
 import com.studentms.model.Student;
 
 import java.sql.*;
@@ -66,5 +67,29 @@ public class StudentDAOImpl implements StudentDAO {
             throw new DatabaseException("Failed to retrieve all students", e);
         }
         return students;
+    }
+
+    @Override
+    public Student getStudentById(Integer id) throws DatabaseException, StudentNotFoundException{
+        String sql = "Select * FROM students where id = ?";
+        try (Connection connection = databaseConfig.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    Student student = new Student();
+                    student.setId(resultSet.getInt("id"));
+                    student.setName(resultSet.getString("name"));
+                    student.setEmail(resultSet.getString("email"));
+                    student.setCourse(resultSet.getString("course"));
+                    student.setAge(resultSet.getInt("age"));
+                    return student;
+                } else {
+                    throw new StudentNotFoundException("Student not found with ID " + id);
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed to find student by ID", e);
+        }
     }
 }

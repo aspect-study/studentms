@@ -54,4 +54,10 @@ public class StudentValidator {
             throw new ValidationException("Name must contain only letters and spaces (2-50 characters)");
         }
     }
+
+    public static void validateStudentId(Integer id) throws ValidationException {
+        if (id == null || id <= 0) {
+            throw new ValidationException("ID must be a positive number.");
+        }
+    }
 }

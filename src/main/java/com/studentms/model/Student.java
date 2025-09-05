@@ -1,6 +1,6 @@
 package com.studentms.model;
 
-public class Student {
+public class Student extends Object {
 
     private Integer id;
     private String name;

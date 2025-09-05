@@ -3,6 +3,7 @@ package com.studentms.service.impl;
 import com.studentms.dao.StudentDAO;
 import com.studentms.dao.impl.StudentDAOImpl;
 import com.studentms.exceptions.DatabaseException;
+import com.studentms.exceptions.StudentNotFoundException;
 import com.studentms.exceptions.ValidationException;
 import com.studentms.model.Student;
 import com.studentms.service.StudentService;
@@ -27,5 +28,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List<Student> getAllStudents() throws DatabaseException {
         return studentDAO.findAll();
+    }
+
+    @Override
+    public Student getStudentById(Integer id) throws DatabaseException,
+            StudentNotFoundException, ValidationException {
+        StudentValidator.validateStudentId(id);
+        return studentDAO.getStudentById(id);
     }
 }

@@ -30,19 +30,34 @@ public class StudentManagementView {
                         handleViewAllStudents();
                         break;
                     case 3:
-                        //TODO hadle logic for searching student bu ID
+                        handleViewStudentById();
                         break;
                     case 4:
-                        System.out.println("Good bye! Thank you.");
-                        System.out.println("=".repeat(40));
+                        //TODO handle student UPDATE
+                        break;
+                    case 5:
+                        handleExit();
                         return;
                 }
-
             } catch (InputMismatchException e) {
-                System.out.println("Invalid choice! Please select 1-3.");
+                System.out.println("Invalid choice! Please select 1-5.");
                 scanner.nextLine();
             }
         }
+    }
+
+    private void handleViewStudentById() {
+        System.out.println("\n --- View Student By ID ----");
+        System.out.print("Please Enter Student ID: ");
+        int id = scanner.nextInt();
+        scanner.nextLine();
+        String result = studentController.getStudentById(id);
+        System.out.println(result);
+    }
+
+    private static void handleExit() {
+        System.out.println("Good bye! Thank you.");
+        System.out.println("=".repeat(40));
     }
 
     private void handleViewAllStudents() {
@@ -58,8 +73,9 @@ public class StudentManagementView {
         System.out.println("1. Add New Student");
         System.out.println("2. View All Students");
         System.out.println("3. View Student by ID");
-        System.out.println("4. Exit");
-        System.out.print("Enter you choice: ");
+        System.out.println("4. Update Student");
+        System.out.println("5. Exit");
+        System.out.print("Enter your choice: ");
     }
 
     private void handleCreateStudent() {
@@ -70,27 +86,12 @@ public class StudentManagementView {
         String email = scanner.nextLine();
         System.out.print("Enter your course: ");
         String course = scanner.nextLine();
-        Integer age = validateAge("Enter your age: ");
+        System.out.print("Enter your age: ");
+        int age = scanner.nextInt();
+        scanner.nextLine();
 
         String result = studentController.createStudent(name, email, course, age);
         System.out.println(result);
     }
 
-    private Integer validateAge(String prompt) {
-        while (true) {
-            try {
-                System.out.print(prompt);
-                Integer age = scanner.nextInt();
-                scanner.nextLine();
-                if (age < 18 || age > 60) {
-                    System.out.println("Age must between 18 to 60. Please try again.");
-                    continue;
-                }
-                return age;
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input!, Please enter a valid number for age.");
-                scanner.nextLine();
-            }
-        }
-    }
 }

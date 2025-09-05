@@ -1,6 +1,7 @@
 package com.studentms.controller;
 
 import com.studentms.exceptions.DatabaseException;
+import com.studentms.exceptions.StudentNotFoundException;
 import com.studentms.exceptions.ValidationException;
 import com.studentms.model.Student;
 import com.studentms.service.StudentService;
@@ -42,5 +43,18 @@ public class StudentController {
             return "Database Error: " + e.getMessage();
         }
         return stringBuilder.toString();
+    }
+
+    public String getStudentById(Integer id) {
+        try {
+            Student student = studentService.getStudentById(id);
+            return student.toString();
+        } catch(DatabaseException e) {
+            return "Database Error: " + e.getMessage();
+        } catch (ValidationException e) {
+            return "Validation Error: " + e.getMessage();
+        } catch (StudentNotFoundException e) {
+            return "Student Error: " + e.getMessage();
+        }
     }
 }
